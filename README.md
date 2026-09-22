@@ -271,7 +271,14 @@ All stored records for the specified symbol.
 
 # 🧠 Design Decisions
 
-\<table> \<tr> \<td>🔀 \<b>Separation of Responsibilities\</b>\</td> \<td>Each component has a single responsibility: Worker A collects, Worker B persists, Django handles the human side, FastAPI serves the API layer.\</td> \</tr> \<tr> \<td>📡 \<b>Redis Pub/Sub\</b>\</td> \<td>Decouples data collection from database persistence.\</td> \</tr> \<tr> \<td>⚙️ \<b>Asynchronous Persistence\</b>\</td> \<td>Worker B uses async operations with SQLAlchemy 2.x.\</td> \</tr> \<tr> \<td>🔒 \<b>Transactions\</b>\</td> \<td>Writes are transactional to ensure data integrity.\</td> \</tr> \<tr> \<td>⏱️ \<b>Millisecond Precision\</b>\</td> \<td>The 350ms interval requires sub-second accuracy, hence \<code>DATETIME(3)\</code>.\</td> \</tr> \<tr> \<td>🐳 \<b>Docker\</b>\</td> \<td>Consistent and reproducible execution of the entire system.\</td> \</tr> \</table>
+| Decision | Description |
+|---|---|
+| 🔀 **Separation of Responsibilities** | Each component has a clear responsibility: Worker A collects market data, Worker B persists it, Django provides the human-facing interface, and FastAPI provides the machine-readable API. |
+| 📡 **Redis Pub/Sub** | Redis Pub/Sub decouples data collection from database persistence, allowing Worker A to publish data without directly depending on MySQL. |
+| ⚙️ **Asynchronous Persistence** | Worker B uses asynchronous database operations with SQLAlchemy 2.x, allowing database I/O to be handled without blocking the entire processing flow. |
+| 🔒 **Transactions** | Database writes are performed inside transactions to maintain data consistency and ensure that each persistence operation is committed or rolled back as a unit. |
+| ⏱️ **Millisecond Precision** | Data is collected every 350 milliseconds, so the `time` column uses `DATETIME(3)` to preserve millisecond-level timestamps. |
+| 🐳 **Docker** | Docker and Docker Compose provide a consistent and reproducible environment for running the pipeline and its supporting services. |
 
 ---
 
@@ -367,36 +374,53 @@ DadeKavan-PD-X/
 
 ---
 
+
 # 🎬 Summary
 
-\<div align="center">
+The complete data flow can be summarized as:
 
+```text
+                         TSETMC
+                            │
+                            ▼
+                       ┌─────────┐
+                       │Worker A │
+                       │Collector│
+                       └────┬────┘
+                            │
+                            │ Structured JSON
+                            ▼
+                    ┌───────────────┐
+                    │ Redis Pub/Sub │
+                    └───────┬───────┘
+                            │
+                            ▼
+                       ┌─────────┐
+                       │Worker B │
+                       │Persistence
+                       └────┬────┘
+                            │
+                            ▼
+                       ┌─────────┐
+                       │  MySQL  │
+                       │   RTDS  │
+                       └────┬────┘
+                            │
+                 ┌──────────┴──────────┐
+                 │                     │
+                 ▼                     ▼
+          ┌──────────────┐      ┌──────────────┐
+          │    Django    │      │   FastAPI    │
+          │ Human-facing │      │Machine-facing│
+          │   Web / UI   │      │   REST API   │
+          └──────────────┘      └──────────────┘
 ```
-TSETMC
-   │
-   ▼
-Worker A
-   │
-   ▼
-Redis Pub/Sub
-   │
-   ▼
-Worker B
-   │
-   ▼
-MySQL / RTDS
-   │
-   ├──────────────► Django
-   │
-   └──────────────► FastAPI
-```
 
-
-**✨ From the market to the API — all real-time, all integrated ✨**
-
-\</div>
+**✨ From TSETMC market data to database and APIs — a complete real-time data pipeline. ✨**
 
 ---
+
+Built with ❤️ and a bit of ☕
 
 \<div align="center">
 
