@@ -419,6 +419,4 @@ The complete data flow can be summarized as:
 **✨ From TSETMC market data to database and APIs — a complete real-time data pipeline. ✨**
 
 ---
-## 👩‍💻 Author
-
-Sanaz Taerghods
+👩‍💻 Author :  Sanaz Taerghods
