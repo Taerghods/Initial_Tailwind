@@ -94,16 +94,6 @@ svgsvg
 
 ---
 
-## ⚙️ Environment
-
-The project runs on **Python 3.11.2**.
-
-All sensitive configuration (MySQL, Redis, API Key, etc.) is loaded from the `.env` file.
-
-> 📌 The `.env` file is **intentionally committed to the repository** so it's available. 😎
-
----
-
 # 🔄 Data Pipeline
 
 ## 1️⃣ Data Collection
@@ -134,7 +124,6 @@ DadeKavan-PD-X
 
 Messages are sent as **structured JSON**:
 
-json
 ```
 {
   "name": "فولاد",
@@ -159,15 +148,11 @@ json
 
 Main table:
 
-
 ```
 RTDS
 ```
 
-
-Columns:
-
-| 🏷️ Column📝 Description |                   |
+| 🏷️ Column                |   📝 Description  |
 | ------------------------ | ----------------- |
 | `id`                     | Unique identifier |
 | `name`                   | Symbol name       |
@@ -192,30 +177,12 @@ DATETIME(3)
 
 Django provides the **human-facing** part of the project.
 
-
-```
-http://127.0.0.1:6280/
-```
-
-svgsvg
-
-Under the path:
-
-text
-
-svg
-
-Copy
-
-svg
-
-Download
+Base path:
 
 ```
 /app
 ```
 
-svgsvg
 
 ### 👤 User Management
 
@@ -229,7 +196,6 @@ Users can:
 - ✅ View profile
 - ✅ Edit profile
 
-The user model includes:
 
 - 📛 Name
 - 📧 Email
@@ -241,24 +207,24 @@ The user model includes:
 - 👑 Superuser status
 - 🔑 Django permissions
 
-Two user levels are defined:
-
-text
-
-svg
-
-Copy
-
-svg
-
-Download
+Model:
 
 ```
 user
-admin
 ```
 
-svgsvg
+| 🏷️ Column                |     📝 Description    |
+| ------------------------ | ----------------------|
+| `Name`                   |       CharField       |
+| `Email`                  |       EmailField      |
+| `Password`               |       CharField       |
+| `Profile_photo`          |       ImageField      |
+| `User_level`             |    enum=[user,admin]  |
+| `Active_status`          |      BooleanField     |
+| `Staff_status`           |      BooleanField     |
+| `Superuser_status`       |      BooleanField     |
+
+
 
 The Django admin panel is used for user and permission management.
 
@@ -268,79 +234,13 @@ The Django admin panel is used for user and permission management.
 
 FastAPI provides the **machine-readable API** layer.
 
-Runs at:
-
-text
-
-svg
-
-Copy
-
-svg
-
-Download
-
-```
-http://127.0.0.1:6288/
-```
-
-svgsvg
-
 Base path:
-
-text
-
-svg
-
-Copy
-
-svg
-
-Download
 
 ```
 /api
 ```
 
-svgsvg
-
-Swagger / OpenAPI docs:
-
-text
-
-svg
-
-Copy
-
-svg
-
-Download
-
-```
-http://127.0.0.1:6288/docs
-```
-
-svgsvg
-
 🔐 All endpoints are protected by a static **API Key** loaded from `.env`.
-
-Required header:
-
-text
-
-svg
-
-Copy
-
-svg
-
-Download
-
-```
-X-API-Key
-```
-
-svgsvg
 
 ---
 
@@ -348,43 +248,18 @@ svgsvg
 
 ### 👤 User Profile
 
-http
-
-svg
-
-Copy
-
-svg
-
-Download
-
 ```
 GET /api/users/get/profile/{userid}
 ```
-
-svgsvg
-
 Returns: profile information without credentials and without the profile image binary.
 
 ---
 
 ### 🖼️ User Photo
 
-http
-
-svg
-
-Copy
-
-svg
-
-Download
-
 ```
 GET /api/users/get/photo/{userid}
 ```
-
-svgsvg
 
 Returns: the profile image as **Base64**.
 
@@ -392,21 +267,9 @@ Returns: the profile image as **Base64**.
 
 ### 📈 Current RTDS Data
 
-http
-
-svg
-
-Copy
-
-svg
-
-Download
-
 ```
 GET /api/RTDS/get/current/{id}
 ```
-
-svgsvg
 
 The most recent stored record for the specified symbol.
 
@@ -414,21 +277,9 @@ The most recent stored record for the specified symbol.
 
 ### 📚 Historical RTDS Data
 
-http
-
-svg
-
-Copy
-
-svg
-
-Download
-
 ```
 GET /api/RTDS/get/historical/{id}
 ```
-
-svgsvg
 
 All stored records for the specified symbol.
 
@@ -444,84 +295,41 @@ All stored records for the specified symbol.
 
 ## 1️⃣ Configure Environment
 
+The project runs on **Python 3.11.2**.
+
 The `.env` file is located at the project root and contains MySQL, Redis, and API Key settings.
 
+> 📌 The `.env` file is **intentionally committed to the repository** so it's available. 😎
+
+
 ## 2️⃣ Start the Services
-
-bash
-
-svg
-
-Copy
-
-svg
-
-Download
 
 ```
 docker compose up -d --build
 ```
 
-svgsvg
-
 Check running services:
-
-bash
-
-svg
-
-Copy
-
-svg
-
-Download
 
 ```
 docker compose ps
 ```
 
-svgsvg
-
 ## 3️⃣ Django Database Setup
-
-bash
-
-svg
-
-Copy
-
-svg
-
-Download
 
 ```
 docker compose exec django python manage.py makemigrations
 docker compose exec django python manage.py migrate
 ```
 
-svgsvg
-
 Create a superuser:
-
-bash
-
-svg
-
-Copy
-
-svg
-
-Download
 
 ```
 docker compose exec django python manage.py createsuperuser
 ```
 
-svgsvg
-
 ## 4️⃣ Access the Applications
 
-| 🖥️ Service🔗 URL |                                                          |
+|    🖥️ Service     |                       🔗 URL                             |
 | ----------------- | -------------------------------------------------------- |
 | Django            | [http://127.0.0.1:6280/](http://127.0.0.1:6280/)         |
 | FastAPI           | [http://127.0.0.1:6288/](http://127.0.0.1:6288/)         |
@@ -530,16 +338,6 @@ svgsvg
 ---
 
 # 📁 Project Structure
-
-text
-
-svg
-
-Copy
-
-svg
-
-Download
 
 ```
 DadeKavan-PD-X/
@@ -583,23 +381,11 @@ DadeKavan-PD-X/
 └── README.md
 ```
 
-svgsvg
-
 ---
 
 # 🎬 Summary
 
 \<div align="center">
-
-text
-
-svg
-
-Copy
-
-svg
-
-Download
 
 ```
 TSETMC
@@ -621,7 +407,6 @@ MySQL / RTDS
    └──────────────► FastAPI
 ```
 
-svgsvg
 
 **✨ From the market to the API — all real-time, all integrated ✨**
 
