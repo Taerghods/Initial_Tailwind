@@ -83,8 +83,8 @@
 |---|---|
 | 🐍 Language                | Python 3.11.2           |
 | 🌐 Web Framework           | Django                  |
-| ⚡ API Framework            | FastAPI                 |
-| 🗄️ Database               | MySQL                   |
+| ⚡ API Framework           | FastAPI                 |
+| 🗄️ Database                | MySQL                   |
 | 🧬 ORM                     | SQLAlchemy 2.x          |
 | 📡 Message Broker          | Redis Pub/Sub           |
 | 📊 Market Data Source      | TSETMC                  |
@@ -191,16 +191,6 @@ Users can:
 - ✅ View profile
 - ✅ Edit profile
 
-
-- 📛 Name
-- 📧 Email
-- 🔒 Password
-- 🖼️ Profile photo
-- 🏅 User level
-- 🟢 Active status
-- 👔 Staff status
-- 👑 Superuser status
-- 🔑 Django permissions
 
 Model:
 
