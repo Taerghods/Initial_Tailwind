@@ -72,7 +72,6 @@
              └──────────────┘            └──────────────┘
 ````
 
-svgsvg
 
 > 💡 Each component does one thing, and does it well.
 
@@ -104,9 +103,7 @@ svgsvg
 
 Current symbols:
 ```
-
 شپنا , شبندر , خودرو , شستا , وبملت , فملی , خساپا , ذوب , شتران
-
 ```
 
 ---
@@ -116,11 +113,9 @@ Current symbols:
 **Worker A** publishes the data on the Redis channel:
 
 
-
-
+```
 DadeKavan-PD-X
-
-
+```
 
 Messages are sent as **structured JSON**:
 
