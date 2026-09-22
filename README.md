@@ -146,9 +146,8 @@ Main table:
 ```
 RTDS
 ```
-
-| 🏷️ Column                |   📝 Description  |
-| ------------------------ | ----------------- |
+|  🏷️ Column   | 📝 Description  |
+|---|---|
 | `id`                     | Unique identifier |
 | `name`                   | Symbol name       |
 | `tsetmc_id`              | TSETMC identifier |
@@ -198,8 +197,8 @@ Model:
 user
 ```
 
-| 🏷️ Column                |     📝 Description    |
-| ------------------------ | ----------------------|
+|  🏷️ Column   | 📝 Description  |
+|---|---|
 | `Name`                   |       CharField       |
 | `Email`                  |       EmailField      |
 | `Password`               |       CharField       |
