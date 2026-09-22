@@ -100,7 +100,7 @@ The project runs on **Python 3.11.2**.
 
 All sensitive configuration (MySQL, Redis, API Key, etc.) is loaded from the `.env` file.
 
-> 📌 The `.env` file is **intentionally committed to the repository** so it's always available and never lost. 😎
+> 📌 The `.env` file is **intentionally committed to the repository** so it's available. 😎
 
 ---
 
@@ -113,31 +113,11 @@ All sensitive configuration (MySQL, Redis, API Key, etc.) is loaded from the `.
 ⏱️ Every **350 milliseconds** for **10 market symbols**.
 
 Current symbols:
-
-text
-
-svg
-
-Copy
-
-svg
-
-Download
-
-```
-فولاد
-شپنا
-شبندر
-خودرو
-شستا
-وبملت
-فملی
-خساپا
-ذوب
-شتران
 ```
 
-svgsvg
+شپنا , شبندر , خودرو , شستا , وبملت , فملی , خساپا , ذوب , شتران
+
+```
 
 ---
 
@@ -145,38 +125,20 @@ svgsvg
 
 **Worker A** publishes the data on the Redis channel:
 
-text
 
-svg
 
-Copy
 
-svg
-
-Download
-
-```
 DadeKavan-PD-X
-```
 
-svgsvg
+
 
 Messages are sent as **structured JSON**:
 
 json
-
-svg
-
-Copy
-
-svg
-
-Download
-
 ```
 {
   "name": "فولاد",
-  "tsetmc_id": "46348559193224090",
+  "tsetmcId": "46348559193224090",
   "data": {
     "bestLimits": []
   },
@@ -184,7 +146,6 @@ Download
 }
 ```
 
-svgsvg
 
 **Worker B** subscribes to the same channel and consumes the incoming messages.
 
@@ -198,21 +159,11 @@ svgsvg
 
 Main table:
 
-text
-
-svg
-
-Copy
-
-svg
-
-Download
 
 ```
 RTDS
 ```
 
-svgsvg
 
 Columns:
 
@@ -226,21 +177,12 @@ Columns:
 
 Since the collection interval is 350ms, the `time` column uses:
 
-sql
-
-svg
-
-Copy
-
-svg
-
-Download
 
 ```
 DATETIME(3)
 ```
 
-svgsvg
+
 
 > ⏱️ This means millisecond precision — no timing detail is lost.
 
@@ -250,17 +192,6 @@ svgsvg
 
 Django provides the **human-facing** part of the project.
 
-Runs at:
-
-text
-
-svg
-
-Copy
-
-svg
-
-Download
 
 ```
 http://127.0.0.1:6280/
